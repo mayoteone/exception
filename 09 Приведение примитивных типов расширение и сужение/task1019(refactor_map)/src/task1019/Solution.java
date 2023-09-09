@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /* 
@@ -44,9 +45,23 @@ public class Solution {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        int id = Integer.parseInt(reader.readLine());
-        String name = reader.readLine();
+        HashMap<String, Integer> map = new HashMap<>();
 
-        System.out.println("Id=" + id + " Name=" + name);
+        while (true) {
+            String id = reader.readLine();
+            if (id.isEmpty()){
+                break;
+            }
+            String name = reader.readLine();
+            if (name.isEmpty()){
+                map.put(null, Integer.parseInt(id));
+                break;
+            }
+
+            map.put(name, Integer.parseInt(id));
+        }
+        for (Map.Entry put: map.entrySet()){
+            System.out.println(put.getValue() + " " + put.getKey());
+        }
     }
 }

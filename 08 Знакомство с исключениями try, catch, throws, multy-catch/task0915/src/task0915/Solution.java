@@ -33,11 +33,22 @@ public class Solution {
     public static StatelessBean BEAN = new StatelessBean();
 
     public static void main(String[] args) {
-        handleExceptions();
+        try {
+            handleExceptions();
+        } catch (FileSystemException exception) {
+            BEAN.log(exception);
+        }
     }
 
-    public static void handleExceptions() {
-        BEAN.methodThrowExceptions();
+    public static void handleExceptions() throws FileSystemException {
+        try {
+            BEAN.methodThrowExceptions();
+        } catch (FileSystemException exception) {
+            BEAN.log(exception);
+            throw exception;
+        } catch (IOException exception) {
+            BEAN.log(exception);
+        }
     }
 
     public static class StatelessBean {

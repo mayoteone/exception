@@ -1,4 +1,4 @@
-import java.util.logging.Level;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -8,7 +8,20 @@ import java.util.logging.Logger;
  */
 
 public class Main {
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
         System.out.println("Hello world!");
+
+        try {
+            throwExcepon();
+        } catch (IOException e) {
+            LOGGER.info("starting a method call with an error");
+            LOGGER.warning("error");
+        }
     }
+
+    public static void throwExcepon() throws IOException {
+        throw new IOException();
+    }
+
 }

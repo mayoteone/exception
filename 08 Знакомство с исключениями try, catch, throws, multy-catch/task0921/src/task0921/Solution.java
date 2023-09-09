@@ -1,6 +1,7 @@
 package task0921;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,18 @@ public class Solution {
     }
 
     public static void readData() {
-        //напишите тут ваш код
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        List<Integer> numbers = new ArrayList<>();
+
+        try {
+            while (true) {
+                int number = Integer.parseInt(reader.readLine());
+                numbers.add(number);
+            }
+        } catch (NumberFormatException | IOException e) {
+            for (Integer number : numbers) {
+                System.out.println(number);
+            }
+        }
     }
 }

@@ -2,9 +2,8 @@ package task1012;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.text.Collator;
+import java.util.*;
 
 /* 
 Количество букв
@@ -30,6 +29,10 @@ public class Solution {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+        Locale russianLocale = new Locale("ru", "RU");
+        Collator collator = Collator.getInstance(russianLocale);
+
+
         // Алфавит
         List<Character> alphabet = Arrays.asList(
                 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж',
@@ -44,6 +47,33 @@ public class Solution {
             list.add(line.toLowerCase());
         }
 
-        // напишите тут ваш код
+        TreeMap<Character, Integer> map = new TreeMap<>(new Comparator<Character>() { //создание объекта анонимного класса с переопределенным методом сравнения с учетом локализации
+            @Override
+            public int compare(Character c1, Character c2) {
+                return collator.compare(c1.toString(), c2.toString());
+            }
+        });
+
+        for (Character abc: alphabet){
+            int count = 0;
+
+            for(String string: list){
+
+                char[] token = string.toCharArray();
+
+                for (int i = 0; i < token.length; i++) {
+                    if (token[i] == abc){
+                        count++;
+                    }
+                }
+            }
+            map.put(abc, count);
+
+
+        }
+
+        for (var put: map.entrySet()){
+            System.out.println(put.getKey() + " " + put.getValue());
+        }
     }
 }

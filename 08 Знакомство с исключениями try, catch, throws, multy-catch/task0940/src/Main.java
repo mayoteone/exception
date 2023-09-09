@@ -1,3 +1,6 @@
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Трай с ресурсами
  * Для примера и упрощения, вам уже даны 2 класса имплементирующие интерфейс AutoCloseable
@@ -10,24 +13,31 @@
  * 2. Заменить вывод сообщений в консоль, на логирование уровня INFO
  */
 public class Main {
+    public static final Logger LOGGER = Logger.getGlobal();
     public static void main(String[] args) {
 
+        try (AutoCloseableResourcesFirst first = new AutoCloseableResourcesFirst(); AutoCloseableResourcesSecond second = new AutoCloseableResourcesSecond()) {
+            first.doSomething();
+            second.doSomething();
+        } catch (Exception exception) {
+           LOGGER.log(Level.INFO, "Error", exception);
+        }
     }
 }
 
 class AutoCloseableResourcesFirst implements AutoCloseable {
 
     public AutoCloseableResourcesFirst() {
-        System.out.println("Вызов конструктора -> AutoCloseableResources_First");
+        Main.LOGGER.info("Вызов конструктора -> AutoCloseableResources_First");
     }
 
     public void doSomething() {
-        System.out.println("Какой то метод -> AutoCloseableResources_First");
+        Main.LOGGER.info("Какой то метод -> AutoCloseableResources_First");
     }
 
     @Override
     public void close() throws Exception {
-        System.out.println("ЗАКРЫВАЕМ ресурс -> AutoCloseableResources_First");
+        Main.LOGGER.info("ЗАКРЫВАЕМ ресурс -> AutoCloseableResources_First");
     }
 }
 
@@ -35,15 +45,15 @@ class AutoCloseableResourcesFirst implements AutoCloseable {
 class AutoCloseableResourcesSecond implements AutoCloseable {
 
     public AutoCloseableResourcesSecond() {
-        System.out.println("Вызов конструктора -> AutoCloseableResources_Second");
+        Main.LOGGER.info("Вызов конструктора -> AutoCloseableResources_Second");
     }
 
     public void doSomething() {
-        System.out.println("Какой то метод -> AutoCloseableResources_Second");
+        Main.LOGGER.info("Какой то метод -> AutoCloseableResources_Second");
     }
 
     @Override
     public void close() throws Exception {
-        System.out.println("ЗАКРЫВАЕМ ресурс -> AutoCloseableResources_Second");
+        Main.LOGGER.info("ЗАКРЫВАЕМ ресурс -> AutoCloseableResources_Second");
     }
 }
